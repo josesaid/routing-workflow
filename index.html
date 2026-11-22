@@ -6,33 +6,81 @@
 <title>Routing Workflow | Said Olano</title>
 <meta name="description" content="Routing workflow pattern with Spring AI: classify an input, then answer with a specialized prompt.">
 <style>
-  :root { --bg:#0f1420; --card:#171e2e; --text:#e7ecf5; --muted:#9aa6bd; --accent:#4fd1c5; --accent2:#6366f1; }
+  :root { --bg:#0f1420; --card:#171e2e; --card2:#1d2538; --text:#e7ecf5; --muted:#9aa6bd; --accent:#4fd1c5; --accent2:#6366f1; --line:#2a3550; }
   * { box-sizing: border-box; }
-  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px;
-         background: radial-gradient(1200px 600px at 10% -10%, #1d2a44 0%, var(--bg) 60%);
-         color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { width:min(640px,100%); background:var(--card); border:1px solid #242d42; border-radius:18px; padding:36px; box-shadow:0 20px 60px rgba(0,0,0,.35); }
-  .eyebrow { color:var(--accent); font-size:13px; letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px; }
-  h1 { margin:0 0 14px; font-size:clamp(26px,4vw,34px); line-height:1.2; }
-  p { color:var(--muted); line-height:1.6; margin:0 0 26px; font-size:16px; }
-  .actions { display:flex; flex-wrap:wrap; gap:12px; }
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:600; font-size:15px; transition:transform .15s ease, opacity .15s ease; }
-  .btn:hover { transform:translateY(-1px); opacity:.92; }
-  .btn-primary { background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#0b1020; }
-  .btn-ghost { border:1px solid #33405e; color:var(--text); background:transparent; }
-  footer { margin-top:30px; padding-top:18px; border-top:1px solid #242d42; color:var(--muted); font-size:13px; }
+  body { margin:0; background: radial-gradient(1200px 600px at 10% -10%, #1d2a44 0%, var(--bg) 60%); color:var(--text);
+         font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; min-height:100vh; }
+  main { max-width: 880px; margin: 0 auto; padding: 56px 18px 72px; }
+  .eyebrow { color:var(--accent); font-size:12px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 10px; }
+  h1 { font-size: clamp(30px, 5.5vw, 46px); line-height:1.15; margin:0 0 14px; }
+  h2 { font-size: 22px; margin: 0 0 12px; }
+  p.lead { color: var(--muted); font-size: 18px; margin: 0 0 26px; max-width: 680px; }
+  section { background: var(--card); border:1px solid var(--line); border-radius: 16px; padding: 24px; margin: 20px 0; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top: 8px; }
+  .btn { display:inline-flex; align-items:center; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:600; font-size:15px; transition: transform .15s ease, opacity .15s ease; }
+  .btn:hover { transform: translateY(-1px); opacity:.92; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color:#0b1020; }
+  .btn-ghost { border:1px solid #33405e; color: var(--text); }
+  .flow { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap:12px; list-style:none; padding:0; margin:0; }
+  .flow li { background: var(--card2); border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px; }
+  .flow b { display:block; color: var(--accent); font-family: ui-monospace, Menlo, monospace; margin-bottom: 4px; }
+  table { width:100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align:left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; width: 28%; }
+  pre { background: #0b1020; border:1px solid var(--line); border-radius: 10px; padding: 16px; overflow-x:auto; font: 13px/1.5 ui-monospace, Menlo, monospace; color:#cfd8ea; }
+  code { font-family: ui-monospace, Menlo, monospace; }
+  a { color: var(--accent); }
+  footer { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 </style>
 </head>
 <body>
 <main>
   <p class="eyebrow">Spring AI · Agentic patterns</p>
   <h1>Routing Workflow</h1>
-  <p>Classify an input first, then answer it with a prompt written for that category. This example shows the pattern with Spring AI and structured classifier output.</p>
-  <div class="actions">
-    <a class="btn btn-primary" href="https://github.com/josesaid/routing-workflow" target="_blank" rel="noopener">Source on GitHub</a>
-    <a class="btn btn-ghost" href="https://josesaid.github.io/">All projects</a>
-  </div>
-  <footer>Said Olano · Spring AI agentic patterns</footer>
+  <p class="lead">Classify an input first, then answer it with a prompt written for that category. This example shows the pattern with Spring AI and structured classifier output.</p>
+
+  <section>
+    <h2>How it works</h2>
+    <ul class="flow">
+      <li><b>1 · Classify</b>The model reads the input and picks one route, returning its reasoning and the chosen route name.</li>
+      <li><b>2 · Route</b>The router looks up that route in a map of specialized prompts. An unknown name fails fast.</li>
+      <li><b>3 · Answer</b>The input goes to the selected prompt, and that response is returned to the caller.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example routes</h2>
+    <table>
+      <tr><th>Route</th><th>Handles</th></tr>
+      <tr><td><code>billing</code></td><td>Charges, refunds and payment options</td></tr>
+      <tr><td><code>technical</code></td><td>Step-by-step troubleshooting and workarounds</td></tr>
+      <tr><td><code>account</code></td><td>Account recovery and security checks</td></tr>
+      <tr><td><code>product</code></td><td>Feature education and usage examples</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Core call</h2>
+<pre><code>public String route(String input, Map&lt;String, String&gt; routes) {
+    String routeKey = determineRoute(input, routes.keySet());
+    String selectedPrompt = routes.get(routeKey);
+    if (selectedPrompt == null) {
+        throw new IllegalArgumentException("Selected route '" + routeKey + "' not found in routes map");
+    }
+    return chatClient.prompt(selectedPrompt + "\nInput: " + input).call().content();
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>Explore</h2>
+    <p>Read the full guide on Dev.to and the source code in the repository.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/josesaid/routing-workflow" target="_blank" rel="noopener">Source on GitHub</a>
+      <a class="btn btn-ghost" href="https://josesaid.github.io/">All projects</a>
+    </div>
+  </section>
+
+  <footer>Said Olano · Spring AI agentic patterns · Based on <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a></footer>
 </main>
 </body>
 </html>
