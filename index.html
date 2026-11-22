@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Routing Workflow | Said Olano</title>
+<meta name="description" content="Routing workflow pattern with Spring AI: classify an input, then answer with a specialized prompt.">
+<style>
+  :root { --bg:#0f1420; --card:#171e2e; --text:#e7ecf5; --muted:#9aa6bd; --accent:#4fd1c5; --accent2:#6366f1; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px;
+         background: radial-gradient(1200px 600px at 10% -10%, #1d2a44 0%, var(--bg) 60%);
+         color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { width:min(640px,100%); background:var(--card); border:1px solid #242d42; border-radius:18px; padding:36px; box-shadow:0 20px 60px rgba(0,0,0,.35); }
+  .eyebrow { color:var(--accent); font-size:13px; letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px; }
+  h1 { margin:0 0 14px; font-size:clamp(26px,4vw,34px); line-height:1.2; }
+  p { color:var(--muted); line-height:1.6; margin:0 0 26px; font-size:16px; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:600; font-size:15px; transition:transform .15s ease, opacity .15s ease; }
+  .btn:hover { transform:translateY(-1px); opacity:.92; }
+  .btn-primary { background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#0b1020; }
+  .btn-ghost { border:1px solid #33405e; color:var(--text); background:transparent; }
+  footer { margin-top:30px; padding-top:18px; border-top:1px solid #242d42; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Spring AI · Agentic patterns</p>
+  <h1>Routing Workflow</h1>
+  <p>Classify an input first, then answer it with a prompt written for that category. This example shows the pattern with Spring AI and structured classifier output.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="https://github.com/josesaid/routing-workflow" target="_blank" rel="noopener">Source on GitHub</a>
+    <a class="btn btn-ghost" href="https://josesaid.github.io/">All projects</a>
+  </div>
+  <footer>Said Olano · Spring AI agentic patterns</footer>
+</main>
+</body>
+</html>
