@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Routing Workflow | Said Olano</title>
+<meta name="description" content="Routing workflow pattern with Spring AI: classify an input, then answer with a specialized prompt.">
+<style>
+  :root { --bg:#f5f1e8; --card:#ffffff; --card2:#f0f5fb; --text:#1d2433; --muted:#5b6578; --accent:#1f6fb2; --accent2:#2b8fd6; --line:#dde3ec; }
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--bg); color:var(--text);
+         font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; min-height:100vh; }
+  main { max-width: 880px; margin: 0 auto; padding: 56px 18px 72px; }
+  .tag { color:var(--accent); font-size:12px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 10px; }
+  h1 { font-size: clamp(30px, 5.5vw, 46px); line-height:1.15; margin:0 0 14px; }
+  h2 { font-size: 22px; margin: 0 0 12px; }
+  p.lead { color: var(--muted); font-size: 18px; margin: 0 0 24px; max-width: 680px; }
+  section { background: var(--card); border:1px solid var(--line); border-radius: 16px; padding: 24px; margin: 20px 0; }
+  .links { margin: 0 0 8px; }
+  .links a { display:inline-block; margin: 0 12px 8px 0; padding: 10px 18px; border-radius: 999px; text-decoration:none; font-weight:600; font-size:15px; }
+  .links a.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color:#ffffff; }
+  .links a.ghost { border:1px solid var(--accent); color: var(--accent); }
+  .fan { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:12px; list-style:none; padding:0; margin:0 0 12px; }
+  .fan li { background: var(--card2); border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px; }
+  .fan b { display:block; color: var(--accent); font-family: ui-monospace, Menlo, monospace; margin-bottom: 4px; }
+  .join { text-align:center; font-family: ui-monospace, Menlo, monospace; color: var(--accent2); font-weight:600; margin: 6px 0; }
+  .two { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; }
+  .two div { background: var(--card2); border-radius: 10px; padding: 14px; }
+  table { width:100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align:left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; width: 34%; }
+  pre { background: #f7f9fc; border:1px solid var(--line); border-radius: 10px; padding: 14px; overflow-x:auto; font: 13px/1.5 ui-monospace, Menlo, monospace; color:#1d2433; }
+  code { font-family: ui-monospace, Menlo, monospace; }
+  a { color: var(--accent); }
+  footer { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="tag">Spring AI · Agentic patterns</p>
+  <h1>Routing Workflow</h1>
+  <p class="lead">Classify an input first, then answer it with a prompt written for that category. A Spring AI example of the routing pattern from "Building Effective Agents".</p>
+  <p class="links">
+    <a class="primary" href="https://github.com/josesaid/routing-workflow" target="_blank" rel="noopener">Source on GitHub</a>
+    <a class="ghost" href="https://josesaid.github.io/">All projects</a>
+  </p>
+
+  <section>
+    <h2>The routing</h2>
+    <ul class="fan">
+      <li><b>billing</b>Charges, refunds and payment options</li>
+      <li><b>technical</b>Steps and workarounds</li>
+      <li><b>account</b>Recovery and security checks</li>
+      <li><b>product</b>Feature education and examples</li>
+    </ul>
+    <div class="join">input → classifier → one route → answer</div>
+  </section>
+
+  <section>
+    <h2>Two variations</h2>
+    <div class="two">
+      <div><b>Classifier</b><p>The model reads the input and returns its reasoning and one route name, as structured output.</p></div>
+      <div><b>Handlers</b><p>Each route has its own prompt. The router sends the input to the one the classifier chose.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Stack</h2>
+    <table>
+      <tr><th>Language</th><td>Java 17 or later</td></tr>
+      <tr><th>Framework</th><td>Spring Boot 4.1.1 with Spring AI</td></tr>
+      <tr><th>Models</th><td>Anthropic Claude through the Spring AI model starter</td></tr>
+      <tr><th>Output</th><td>Structured classifier output mapped to a record</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Run it</h2>
+    <pre><code>export ANTHROPIC_API_KEY=your-key
+./mvnw spring-boot:run</code></pre>
+    <p>The demo runs three sample support tickets through the router and prints each answer.</p>
+  </section>
+
+  <section>
+    <h2>Classes</h2>
+    <table>
+      <tr><th><code>RoutingWorkflow</code></th><td>Classifies the input and runs the selected route's prompt.</td></tr>
+      <tr><th><code>RoutingResponse</code></th><td>Record with <code>reasoning</code> and <code>selection</code>.</td></tr>
+      <tr><th><code>Application</code></th><td>Defines the four routes and runs the sample tickets.</td></tr>
+    </table>
+  </section>
+
+  <footer>Said Olano · Spring AI agentic patterns</footer>
+</main>
+</body>
+</html>
